@@ -27,4 +27,5 @@ sudo ./subscout.sh example.org
 
 ## Configuration
 
-Edit your api keys in `api-keys.yaml` file if necessary for better result.
+Add your api keys in `config/api-keys.yaml` file if necessary for better result.
+Use the file `config/api-keys-example.yaml` as an example.
