@@ -1,6 +1,6 @@
 # Subscout
 
-All-in-one subdomain aggregator image.
+All-in-one subdomains scout tool Docker image.
 No tool is perfect. Several subdomain finders exists and some of them are combined in this single Docker image to give one sorted output.
 
 ## Requirements
