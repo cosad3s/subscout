@@ -66,13 +66,13 @@ then
 fi
 
 # Check configuration
-if [ ! -f "./config/api-keys.yaml" ]
+if [ ! -f "./config/amass-config.ini" ]
 then
-    echo "File 'api-keys.yaml' is not present: will use 'api-keys-example.yaml' file."
-    cp ./config/api-keys-example.yaml ./config/api-keys.yaml
+    echo "File './config/amass-config.ini' is not present: will use './config/amass-config-example.ini' file."
+    cp ./config/amass-config-example.ini ./config/amass-config.ini
 fi
 
 # Run
-docker run -v $(pwd)/config/api-keys.yaml:/etc/theHarvester/api-keys.yaml -v $(pwd)/output:/app/results/final -it subscout "$DOMAIN"
+docker run -v $(pwd)/config/amass-config.ini:/etc/amass-config.ini -v $(pwd)/output:/app/results/final -it subscout "$DOMAIN"
 
 exit 0
