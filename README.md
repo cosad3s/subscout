@@ -32,10 +32,10 @@ sudo ./subscout.sh example.org
   - **Set with:** *Chinaz,FullHunt*
 - [theHarvester](https://github.com/laramies/theHarvester):
   - Powered by: *anubis, bevigil, baidu, binaryedge, bing, bingapi, bufferoverun, censys, certspotter, crtsh, dnsdumpster, duckduckgo, fullhunt, github-code, hackertarget, hunter, intelx, otx, pentesttools, projectdiscovery, qwant, rapiddns, rocketreach, securityTrails, shodan, sublist3r, threatcrowd, threatminer, urlscan, vhost, virustotal, yahoo, zoomeye*
-  - **Set with**: *qwant,rocketreach*
+  - **Set with**: *qwant*
 - [cero](https://github.com/glebarez/cero)
 
 ## Configuration
 
-Add your api keys in `config/api-keys.yaml` file if necessary for better result.
-Use the file `config/api-keys-example.yaml` as an example.
+Add your credentials in `config/amass-config.ini` file if necessary for better result.
+Use the file `config/amass-config-example.ini` as an example.
