@@ -9,9 +9,14 @@ cat <<EOF
 └─┘└─┘└─┘└─┘└─┘└─┘└─┘ ┴ 
 EOF
 
+# Check requirements
+if ! command -v docker &> /dev/null
+then
+    echo "docker could not be found."
+    exit 1
+fi
 
 # Check help and args
-
 function usage {
   echo -e \\n"Usage of subscout by cosad3s.${NORM}"\\n
   echo "${BOLD}-d${NORM}  Domain name to scout."
@@ -42,6 +47,14 @@ if [ -z "$DOMAIN" ]
 then
     echo "No domain name supplied."
     usage
+    exit 1
+fi
+
+# Check privileges
+DOCKER_PRIV=$(docker ps)
+if [ "$?" -ne 0 ]
+then
+    echo "It seems you have not the privilege to use Docker. Retry with 'root' user or through 'sudo ./subscout.sh $DOMAIN'."
     exit 1
 fi
 
