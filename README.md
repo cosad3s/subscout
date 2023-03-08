@@ -33,7 +33,7 @@ sudo ./subscout.sh example.org
 - [theHarvester](https://github.com/laramies/theHarvester):
   - Powered by: *anubis, bevigil, baidu, binaryedge, bing, bingapi, bufferoverun, censys, certspotter, crtsh, dnsdumpster, duckduckgo, fullhunt, github-code, hackertarget, hunter, intelx, otx, pentesttools, projectdiscovery, qwant, rapiddns, rocketreach, securityTrails, shodan, sublist3r, threatcrowd, threatminer, urlscan, vhost, virustotal, yahoo, zoomeye*
   - **Set with**: *qwant*
-- [cero](https://github.com/glebarez/cero)
+- [cero](https://github.com/glebarez/cero): to get domain names from certificates.
 
 ## Configuration
 
