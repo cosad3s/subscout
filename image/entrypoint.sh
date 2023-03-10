@@ -24,11 +24,12 @@ BIN_CERO="cero/cero"
 BIN_SUBFINDER="subfinder/v2/subfinder"
 BIN_THEHARVESTER="theHarvester/theHarvester.py"
 BIN_AMASS="/root/go/bin/amass"
+BIN_CRTSH="crtsh/crtsh"
 
 ## Configuration
 ### Amass - Non-bruteforce and working datasources only
 CONFIG_AMASS="/etc/amass-config.ini"
-AMASS_USED_DATASOURCES="360PassiveDNS,ASNLookup,AbuseIPDB,Ahrefs,AlienVault,AnubisDB,ArchiveIt,Arquivo,Ask,BGPTools,BGPView,Baidu,BeVigil,BigDataCloud,BinaryEdge,Bing,BufferOver,BuiltWith,C99,CIRCL,CertCentral,CertSpotter,Crtsh,Chaos,Cloudflare,CommonCrawl,Crtsh,DNSDB,DNSDumpster,DNSHistory,DNSRepo,DNSSpy,DNSlytics,Deepinfo,Detectify,Digitorus,DuckDuckGo,FOFA,FacebookCT,Gists,GitHub,GitLab,Google,GoogleCT,Greynoise,HAW,HackerOne,HackerTarget,Hunter,HyperStat,IPdata,IPinfo,IntelX,LeakIX,Maltiverse,Mnemonic,Netlas,NetworksDB,PKey,PassiveTotal,Pastebin,PentestTools,PublicWWW,Pulsedive,Quake,RADb,RapidDNS,Riddler,Robtex,SOCRadar,Searchcode,Searx,SecurityTrails,ShadowServer,Shodan,SiteDossier,SonarSearch,Spamhaus,SpyOnWeb,Spyse,Sublist3rAPI,Synapsint,TeamCymru,ThreatBook,ThreatMiner,Twitter,UKWebArchive,URLScan,Umbrella,VirusTotal,Wayback,WhoisXMLAPI,Yahoo,Yandex,ZETAlytics,ZoomEye"
+AMASS_USED_DATASOURCES="360PassiveDNS,ASNLookup,AbuseIPDB,Ahrefs,AlienVault,AnubisDB,ArchiveIt,Arquivo,Ask,BGPTools,BGPView,Baidu,BeVigil,BigDataCloud,BinaryEdge,Bing,BufferOver,BuiltWith,C99,CIRCL,CertCentral,CertSpotter,Chaos,Cloudflare,CommonCrawl,DNSDB,DNSDumpster,DNSHistory,DNSRepo,DNSSpy,DNSlytics,Deepinfo,Detectify,Digitorus,DuckDuckGo,FOFA,FacebookCT,Gists,GitHub,GitLab,Google,GoogleCT,Greynoise,HAW,HackerOne,HackerTarget,Hunter,HyperStat,IPdata,IPinfo,IntelX,LeakIX,Maltiverse,Mnemonic,Netlas,NetworksDB,PKey,PassiveTotal,Pastebin,PentestTools,PublicWWW,Pulsedive,Quake,RADb,RapidDNS,Riddler,Robtex,SOCRadar,Searchcode,Searx,SecurityTrails,ShadowServer,Shodan,SiteDossier,SonarSearch,Spamhaus,SpyOnWeb,Spyse,Sublist3rAPI,Synapsint,TeamCymru,ThreatBook,ThreatMiner,Twitter,UKWebArchive,URLScan,Umbrella,VirusTotal,Wayback,WhoisXMLAPI,Yahoo,Yandex,ZETAlytics,ZoomEye"
 ### Subfinder
 # Notes: SUBFINDER_ALLDATASOURCES="BeVigil,BinaryEdge,BufferOver,C99,Censys,CertSpotter,Chaos,Chinaz,DnsDB,Fofa,FullHunt,GitHub,Intelx,PassiveTotal,quake,Robtex,SecurityTrails,Shodan,ThreatBook,VirusTotal,WhoisXML API,ZoomEye,ZoomEye API,dnsrepo,Hunter"
 SUBFINDER_USED_DATASOURCES="Chinaz,FullHunt"
@@ -46,6 +47,7 @@ OUTPUT_CERO="$OUTPUT_TMP/cero"
 OUTPUT_SUBFINDER="$OUTPUT_TMP/subfinder"
 OUTPUT_THEHARVESTER="$OUTPUT_TMP/theHarvester"
 OUTPUT_AMASS="$OUTPUT_TMP/amass"
+OUTPUT_CRTSH="$OUTPUT_TMP/crtsh"
 
 ## Prepare results
 mkdir -p "$OUTPUT_TMP" 
@@ -55,6 +57,7 @@ mkdir -p "$OUTPUT_CERO"
 mkdir -p "$OUTPUT_SUBFINDER"
 mkdir -p "$OUTPUT_THEHARVESTER"
 mkdir -p "$OUTPUT_AMASS"
+mkdir -p "$OUTPUT_CRTSH"
 
 # RUN
 echo -e "[*] Run ..."
@@ -76,11 +79,16 @@ sed 's/:.*//' "$OUTPUT_THEHARVESTER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.
 rm "$OUTPUT_THEHARVESTER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp"
 echo -e "${GREEN}[+] theHarvester done!${NC}"
 
+echo -e "[*] crtsh ..."
+"$BIN_CRTSH" -q "$INPUT_DOMAINS" -o > "$OUTPUT_CRTSH.$OUTPUT_FILENAME_EXTENSION"
+echo -e "${GREEN}[+] crtsh done!${NC}"
+
 # AGGREGATE
 echo -e "[*] Aggregate the results ..."
 cat "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
 cat "$OUTPUT_THEHARVESTER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
 cat "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+cat "$OUTPUT_CRTSH.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
 cat "$OUTPUT_TMP/agg_tmp.txt" | sort | uniq > "$OUTPUT_TMP/agg_sorted_tmp.txt"
 rm "$OUTPUT_TMP/agg_tmp.txt"
 echo -e "${GREEN}[+] Aggregation done!${NC}"

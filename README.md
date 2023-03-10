@@ -26,13 +26,15 @@ sudo ./subscout.sh example.org
     - Scraping:	*AbuseIPDB, Ask, Baidu, Bing, DNSDumpster, DNSHistory, DNSSpy, DuckDuckGo, Gists, Google, HackerOne, HyperStat, PKey, RapidDNS, Riddler, Searx, SiteDossier, Synapsint, Yahoo*
     - Web Archives:	*ArchiveIt, Arquivo, CommonCrawl, HAW, PublicWWW, UKWebArchive, Wayback*
     - WHOIS:	*AlienVault, AskDNS, DNSlytics, ONYPHE, SecurityTrails, SpyOnWeb, Umbrella, WhoisXMLAPI*
-  - **Set with:** *360PassiveDNS,ASNLookup,AbuseIPDB,Ahrefs,AlienVault,AnubisDB,ArchiveIt,Arquivo,Ask,BGPTools,BGPView,Baidu,BeVigil,BigDataCloud,BinaryEdge,Bing,BufferOver,BuiltWith,C99,CIRCL,CertCentral,CertSpotter,Crtsh,Chaos,Cloudflare,CommonCrawl,Crtsh,DNSDB,DNSDumpster,DNSHistory,DNSRepo,DNSSpy,DNSlytics,Deepinfo,Detectify,Digitorus,DuckDuckGo,FOFA,FacebookCT,Gists,GitHub,GitLab,Google,GoogleCT,Greynoise,HAW,HackerOne,HackerTarget,Hunter,HyperStat,IPdata,IPinfo,IntelX,LeakIX,Maltiverse,Mnemonic,Netlas,NetworksDB,PKey,PassiveTotal,Pastebin,PentestTools,PublicWWW,Pulsedive,Quake,RADb,RapidDNS,Riddler,Robtex,SOCRadar,Searchcode,Searx,SecurityTrails,ShadowServer,Shodan,SiteDossier,SonarSearch,Spamhaus,SpyOnWeb,Spyse,Sublist3rAPI,Synapsint,TeamCymru,ThreatBook,ThreatMiner,Twitter,UKWebArchive,URLScan,Umbrella,VirusTotal,Wayback,WhoisXMLAPI,Yahoo,Yandex,ZETAlytics,ZoomEye*
+  - **Set with:** *360PassiveDNS,ASNLookup,AbuseIPDB,Ahrefs,AlienVault,AnubisDB,ArchiveIt,Arquivo,Ask,BGPTools,BGPView,Baidu,BeVigil,BigDataCloud,BinaryEdge,Bing,BufferOver,BuiltWith,C99,CIRCL,CertCentral,CertSpotter,Chaos,Cloudflare,CommonCrawl,DNSDB,DNSDumpster,DNSHistory,DNSRepo,DNSSpy,DNSlytics,Deepinfo,Detectify,Digitorus,DuckDuckGo,FOFA,FacebookCT,Gists,GitHub,GitLab,Google,GoogleCT,Greynoise,HAW,HackerOne,HackerTarget,Hunter,HyperStat,IPdata,IPinfo,IntelX,LeakIX,Maltiverse,Mnemonic,Netlas,NetworksDB,PKey,PassiveTotal,Pastebin,PentestTools,PublicWWW,Pulsedive,Quake,RADb,RapidDNS,Riddler,Robtex,SOCRadar,Searchcode,Searx,SecurityTrails,ShadowServer,Shodan,SiteDossier,SonarSearch,Spamhaus,SpyOnWeb,Spyse,Sublist3rAPI,Synapsint,TeamCymru,ThreatBook,ThreatMiner,Twitter,UKWebArchive,URLScan,Umbrella,VirusTotal,Wayback,WhoisXMLAPI,Yahoo,Yandex,ZETAlytics,ZoomEye*
 - [subfinder](https://github.com/projectdiscovery/subfinder): 
   - Powered by: *BeVigil, BinaryEdge, BufferOver, C99, Censys, CertSpotter, Chaos, Chinaz, DnsDB, Fofa, FullHunt, GitHub, Intelx, PassiveTotal, quake, Robtex, SecurityTrails, Shodan, ThreatBook, VirusTotal, WhoisXML API, ZoomEye, ZoomEye API, dnsrepo, Hunter*
   - **Set with:** *Chinaz,FullHunt*
 - [theHarvester](https://github.com/laramies/theHarvester):
   - Powered by: *anubis, bevigil, baidu, binaryedge, bing, bingapi, bufferoverun, censys, certspotter, crtsh, dnsdumpster, duckduckgo, fullhunt, github-code, hackertarget, hunter, intelx, otx, pentesttools, projectdiscovery, qwant, rapiddns, rocketreach, securityTrails, shodan, sublist3r, threatcrowd, threatminer, urlscan, vhost, virustotal, yahoo, zoomeye*
   - **Set with**: *qwant*
+- [crtsh](https://github.com/famasoon/crtsh):
+  - **Powered by & set with**: *crtsh*
 - [cero](https://github.com/glebarez/cero): to get domain names from certificates.
 
 ## Configuration
