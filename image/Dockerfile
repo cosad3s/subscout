@@ -9,7 +9,7 @@ RUN git clone https://github.com/glebarez/cero && cd cero && go build && chmod a
 RUN git clone https://github.com/laramies/theHarvester && cd theHarvester && pip install -r requirements/base.txt && chmod a+x theHarvester.py
 # https://github.com/laramies/theHarvester/issues/393
 COPY fixes/proxies.yaml /etc/theHarvester/proxies.yaml
-RUN go install -v github.com/OWASP/Amass/v3/...@master
+RUN go install -v github.com/owasp-amass/amass/v3/...@master
 RUN git clone https://github.com/famasoon/crtsh && cd crtsh && go build && chmod a+x crtsh
 
 COPY entrypoint.sh .
