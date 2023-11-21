@@ -1,0 +1,34 @@
+alienvault:
+  - API_KEY
+bevigil:
+  - API_KEY
+binaryedge:
+  - API_KEY
+bufferover:
+  - API_KEY
+builtwith:
+  - API_KEY
+c99:
+  - API_KEY
+certspotter:
+  - API_KEY
+fullhunt:
+  - API_KEY
+github:
+  - API_KEY
+intelx:
+  - 2.intelx.io:API_KEY
+leakix:
+  - API_KEY
+netlas:
+  - API_KEY
+redhuntlabs:
+  - https://reconapi.redhuntlabs.com/community/v1/domains/subdomains:API_KEY
+securitytrails:
+  - API_KEY
+shodan:
+  - API_KEY
+virustotal:
+  - API_KEY
+zoomeyeapi:
+  - API_KEY

@@ -1,2 +1,4 @@
 output
 config/amass-config.ini
+config/subfinder-config.yaml
+config/fofax-config.yaml
