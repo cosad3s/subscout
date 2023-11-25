@@ -16,7 +16,7 @@
 
 Usage of subscout by cosad3s.
 
--d  Domain name to scout.
+-d  Domain(s) to scout (separated by comma).
 -f  Force subscout Docker image to be rebuilt.
 -h  --Displays this help message. No further functions are performed.
 ```

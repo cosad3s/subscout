@@ -19,7 +19,7 @@ fi
 # Check help and args
 function usage {
   echo -e \\n"Usage of subscout by cosad3s.${NORM}"\\n
-  echo "${BOLD}-d${NORM}  Domain name to scout."
+  echo "${BOLD}-d${NORM}  Domain(s) to scout (separated by comma)."
   echo "${BOLD}-f${NORM}  Force subscout Docker image to be rebuilt."
   echo -e "${BOLD}-h${NORM}  --Displays this help message. No further functions are performed."\\n
 }

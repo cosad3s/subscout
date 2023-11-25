@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Styles
 GREEN="\e[32m"
@@ -15,6 +15,7 @@ then
     exit 1
 else
     INPUT_DOMAINS=$(printf "$INPUT_DOMAINS" | tr -d " \t\n\r" )
+    IFS=',' read -ra DOMAINS <<< "$INPUT_DOMAINS"
 fi
 
 # INIT
@@ -41,71 +42,76 @@ SUBFINDER_USED_DATASOURCES="alienvault,anubis,bevigil,binaryedge,bufferover,buil
 OUTPUT_FILENAME="subdomains"
 OUTPUT_FILENAME_EXTENSION="txt"
 OUTPUT="results"
-OUTPUT_DEFAULT="$OUTPUT/final/$INPUT_DOMAINS"
-OUTPUT_TMP="$OUTPUT/tmp"
-OUTPUT_CERO="$OUTPUT_TMP/cero"
-OUTPUT_SUBFINDER="$OUTPUT_TMP/subfinder"
-OUTPUT_AMASS="$OUTPUT_TMP/amass"
-OUTPUT_FOFAX="$OUTPUT_TMP/fofax"
-OUTPUT_PUNCIA="$OUTPUT_TMP/puncia"
 
-## Prepare results
-mkdir -p "$OUTPUT_TMP" 
-rm -rf $OUTPUT_TMP/*
-mkdir -p "$OUTPUT_DEFAULT"
-mkdir -p "$OUTPUT_CERO"
-mkdir -p "$OUTPUT_SUBFINDER"
-mkdir -p "$OUTPUT_AMASS"
-mkdir -p "$OUTPUT_FOFAX"
-mkdir -p "$OUTPUT_PUNCIA"
+for DOMAIN in "${DOMAINS[@]}"; do
+    echo -e "${GREEN}[*] Scanning $DOMAIN ...${NC}" 
 
-# RUN
-echo -e "[*] Run ..."
+    OUTPUT_DEFAULT="$OUTPUT/final/$DOMAIN"
+    OUTPUT_TMP="$OUTPUT/tmp"
+    OUTPUT_CERO="$OUTPUT_TMP/cero"
+    OUTPUT_SUBFINDER="$OUTPUT_TMP/subfinder"
+    OUTPUT_AMASS="$OUTPUT_TMP/amass"
+    OUTPUT_FOFAX="$OUTPUT_TMP/fofax"
+    OUTPUT_PUNCIA="$OUTPUT_TMP/puncia"
 
-## amass
-echo -e "[*] amass ..."
-"$BIN_AMASS" enum -config "$CONFIG_AMASS" -include "$AMASS_USED_DATASOURCES" -d "$INPUT_DOMAINS" -o "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" -nocolor -silent &>/dev/null
-echo -e "${GREEN}[+] amass done!${NC}"
+    ## Prepare results
+    mkdir -p "$OUTPUT_TMP" 
+    rm -rf $OUTPUT_TMP/*
+    mkdir -p "$OUTPUT_DEFAULT"
+    mkdir -p "$OUTPUT_CERO"
+    mkdir -p "$OUTPUT_SUBFINDER"
+    mkdir -p "$OUTPUT_AMASS"
+    mkdir -p "$OUTPUT_FOFAX"
+    mkdir -p "$OUTPUT_PUNCIA"
 
-echo -e "[*] subfinder ..."
-"$BIN_SUBFINDER" -pc "$CONFIG_SUBFINDER" -s "$SUBFINDER_USED_DATASOURCES" -d "$INPUT_DOMAINS" -o "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" -silent &> /dev/null
-echo -e "${GREEN}[+] subfinder done!${NC}"
+    # RUN
+    echo -e "[*] Run ..."
 
-## fofax
-echo -e "[*] fofax ..."
-"$BIN_FOFAX" -q 'domain="$INPUT_DOMAINS"' | cut -d ':' -f1 > "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
-echo -e "${GREEN}[+] fofax done!${NC}"
+    ## amass
+    echo -e "[*] amass ..."
+    "$BIN_AMASS" enum -config "$CONFIG_AMASS" -include "$AMASS_USED_DATASOURCES" -d "$DOMAIN" -o "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" -nocolor -silent &>/dev/null
+    echo -e "${GREEN}[+] amass done!${NC}"
 
-## puncia
-echo -e "[*] puncia ..."
-"$BIN_PUNCIA" subdomain "$INPUT_DOMAINS" "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" &> /dev/null
-echo -e "${GREEN}[+] puncia done!${NC}"
+    echo -e "[*] subfinder ..."
+    "$BIN_SUBFINDER" -pc "$CONFIG_SUBFINDER" -s "$SUBFINDER_USED_DATASOURCES" -d "$DOMAIN" -o "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" -silent &> /dev/null
+    echo -e "${GREEN}[+] subfinder done!${NC}"
 
-# AGGREGATE
-echo -e "[*] Aggregate the results ..."
-cat "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
-cat "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
-cat "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
-cat "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
-cat "$OUTPUT_TMP/agg_tmp.txt" | LC_COLLATE=C sort | uniq > "$OUTPUT_TMP/agg_sorted_tmp.txt"
-rm "$OUTPUT_TMP/agg_tmp.txt"
-echo -e "${GREEN}[+] Aggregation done!${NC}"
+    ## fofax
+    echo -e "[*] fofax ..."
+    "$BIN_FOFAX" -q 'domain="$DOMAIN"' | cut -d ':' -f1 > "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+    echo -e "${GREEN}[+] fofax done!${NC}"
 
-# AFFINE with cero
+    ## puncia
+    echo -e "[*] puncia ..."
+    "$BIN_PUNCIA" subdomain "$DOMAIN" "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" &> /dev/null
+    echo -e "${GREEN}[+] puncia done!${NC}"
 
-## Process
-echo -e "[*] Running cero ..."
-cat "$OUTPUT_TMP/agg_sorted_tmp.txt" | "$BIN_CERO" > "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp"
-## Filter
-grep -E "$INPUT_DOMAINS$" "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp" > "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
-rm "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp"
-echo -e "${GREEN}[+] cero done!${NC}"
+    # AGGREGATE
+    echo -e "[*] Aggregate the results ..."
+    cat "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+    cat "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+    cat "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+    cat "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+    cat "$OUTPUT_TMP/agg_tmp.txt" | LC_COLLATE=C sort | uniq > "$OUTPUT_TMP/agg_sorted_tmp.txt"
+    rm "$OUTPUT_TMP/agg_tmp.txt"
+    echo -e "${GREEN}[+] Aggregation done!${NC}"
 
-## Aggregate again then reorder
-echo -e "[*] Finishing ..."
-cat "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_sorted_tmp.txt"
-cat "$OUTPUT_TMP/agg_sorted_tmp.txt" | LC_COLLATE=C sort | uniq > "$OUTPUT_DEFAULT/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+    # AFFINE with cero
 
-# END
-echo -e "${GREEN}[+] Done!${NC}"
-cat "$OUTPUT_DEFAULT/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+    ## Process
+    echo -e "[*] Running cero ..."
+    cat "$OUTPUT_TMP/agg_sorted_tmp.txt" | "$BIN_CERO" > "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp"
+    ## Filter
+    grep -E "$DOMAIN$" "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp" > "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+    rm "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION.tmp"
+    echo -e "${GREEN}[+] cero done!${NC}"
+
+    ## Aggregate again then reorder
+    echo -e "[*] Finishing ..."
+    cat "$OUTPUT_CERO/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_sorted_tmp.txt"
+    cat "$OUTPUT_TMP/agg_sorted_tmp.txt" | LC_COLLATE=C sort | uniq > "$OUTPUT_DEFAULT/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+
+    # END
+    echo -e "${GREEN}[+] Done!${NC}"
+    cat "$OUTPUT_DEFAULT/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+done
