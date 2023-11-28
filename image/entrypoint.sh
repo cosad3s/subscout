@@ -5,7 +5,7 @@ GREEN="\e[32m"
 RED="\e[31m"
 NC="\e[0m"
 
-# Args
+# Args
 INPUT_DOMAINS="$1"
 
 # Requirements checks
@@ -21,7 +21,7 @@ fi
 # INIT
 echo -e "[*] Init ..."
 
-## Binaries
+## Binaries
 BIN_CERO="cero/cero"
 BIN_SUBFINDER="./subfinder"
 BIN_AMASS="/root/go/bin/amass"
@@ -38,7 +38,7 @@ SUBFINDER_USED_DATASOURCES="alienvault,anubis,bevigil,binaryedge,bufferover,buil
 ## fofax
 "$BIN_FOFAX" -silent
 
-## Output files
+## Output files
 OUTPUT_FILENAME="subdomains"
 OUTPUT_FILENAME_EXTENSION="txt"
 OUTPUT="results"
@@ -78,7 +78,7 @@ for DOMAIN in "${DOMAINS[@]}"; do
 
     ## fofax
     echo -e "[*] fofax ..."
-    "$BIN_FOFAX" -q 'domain="$DOMAIN"' | cut -d ':' -f1 > "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
+    "$BIN_FOFAX" -q 'domain='"$DOMAIN"'' | cut -d ':' -f1 > "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION"
     echo -e "${GREEN}[+] fofax done!${NC}"
 
     ## puncia
