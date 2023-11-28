@@ -44,9 +44,6 @@ sudo ./subscout.sh -d example.org
 - [subfinder](https://github.com/projectdiscovery/subfinder): 
   - Powered by: *AlienVault, AnubisDB, BeVigil, BinaryEdge, BufferOver, BuiltWith, C99, Censys, CertSpotter, Chaos, Chinaz, CommonCrawl, Digitorus, DnsDB, dnsdumpster, dnsrepo, FullHunt, Intelx, hackertarget, Hunter, LeakIX, PassiveTotal, quake, Netlas, RedHunt Labs, Robtex, SecurityTrails, Shodan, ThreatBook, VirusTotal, WhoisXML API, ZoomEye, ZoomEye API*
   - **Set with:** *AlienVault, AnubisDB, BeVigil, BinaryEdge, BufferOver, BuiltWith, c99, CertSpotter, CommonCrawl, crtsh, Digitorus, dnsdumpster, FullHunt, GitHub, hackertarget, IntelX, LeakIX, Netlas, RapidDNS, Riddler, RedHunt Labs, Sitedossier, SecurityTrails, Shodan, VirusTotal, Wayback, ZoomEye API*
-- [theHarvester](https://github.com/laramies/theHarvester):
-  - Powered by: *anubis, bevigil, baidu, binaryedge, bing, bingapi, bufferoverun, censys, certspotter, crtsh, dnsdumpster, duckduckgo, facebook, fullhunt, github-code, hackertarget, intelx, otx, pentesttools, projectdiscovery, qwant, rapiddns, rocketreach, securityTrails, shodan, sublist3r, threatcrowd, threatminer, urlscan, vhost, virustotal, yahoo, Wayback, zoomeye*
-  - **Set with**: *qwant*
 - [puncia](https://github.com/ARPSyndicate/puncia):
   - **Powered by:** [SubdomainCenter](https://www.subdomain.center/)
 - [fofax](https://github.com/xiecat/fofax):
@@ -58,5 +55,8 @@ sudo ./subscout.sh -d example.org
 Add your credentials in `config/amass-config.ini` file if necessary for better result.
 Use the file `config/amass-config-example.ini` as an example.
 
-Add your Redhunt credentials in `config/subfinder-config.yaml` file if necessary for better result.
+Add your credentials in `config/subfinder-config.yaml` file if necessary for better result.
 Use the file `config/subfinder-config-example.yaml` as an example.
+
+Add your FOFA credentials in `config/fofax-config.yaml` file if necessary for better result.
+Use the file `config/fofax-config-example.yaml` as an example.
