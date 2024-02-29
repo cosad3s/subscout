@@ -91,7 +91,7 @@ for DOMAIN in "${DOMAINS[@]}"; do
     cat "$OUTPUT_SUBFINDER/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
     cat "$OUTPUT_AMASS/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
     cat "$OUTPUT_FOFAX/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
-    cat "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" >> "$OUTPUT_TMP/agg_tmp.txt"
+    cat "$OUTPUT_PUNCIA/$OUTPUT_FILENAME.$OUTPUT_FILENAME_EXTENSION" | jq .[] | sed s/\"//g >> "$OUTPUT_TMP/agg_tmp.txt"
     cat "$OUTPUT_TMP/agg_tmp.txt" | LC_COLLATE=C sort | uniq > "$OUTPUT_TMP/agg_sorted_tmp.txt"
     rm "$OUTPUT_TMP/agg_tmp.txt"
     echo -e "${GREEN}[+] Aggregation done!${NC}"
